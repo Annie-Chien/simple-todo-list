@@ -1,0 +1,112 @@
+@import '../variables.scss';
+
+.content {
+  border: 3px solid $color-primary;
+  margin: 2rem;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  padding-bottom: 1rem;
+
+  & > * {
+    font-size: 1.8rem;
+  }
+}
+
+.alert {
+  font-size: 1.6rem;
+  color: $color-white;
+  background-color: $color-danger;
+  text-align: center;
+  line-height: 2;
+}
+
+.titleInput,
+.detailInput {
+  width: 100%;
+  font-size: 1.8rem;
+  font-family: inherit;
+  background-color: transparent;
+  padding: 1rem;
+  border: none;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.titleInput {
+  border-bottom: 3px dotted $color-primary;
+}
+
+.detailInput {
+  resize: none;
+}
+
+.formGroup {
+  margin-left: 1rem;
+
+  .dateInput {
+    border: none;
+    font-family: inherit;
+    font-size: 1.8rem;
+    padding: 0rem 0.5rem;
+    margin: 0 1rem;
+    cursor: pointer;
+  }
+}
+
+.container {
+  margin-left: 1rem;
+}
+
+.btn {
+  width: 7.5rem;
+  padding: 0.5rem;
+  font-size: 1.6rem;
+  background-color: transparent;
+  border-radius: 1rem;
+  margin: 0 1rem;
+  font-weight: 500;
+  transition: all 0.25s;
+  text-transform: capitalize;
+
+  @include respond(phone-sm) {
+    margin: 0.2rem;
+  }
+
+  &:nth-child(2) {
+    color: darken($color-success, 20);
+    border: 2px solid $color-success;
+
+    &:hover {
+      background-color: $color-success;
+      color: $color-white;
+    }
+  }
+  &:nth-child(3) {
+    color: darken($color-alert, 20);
+    border: 2px solid $color-alert;
+
+    &:hover {
+      background-color: $color-alert;
+      color: $color-white;
+    }
+  }
+  &:last-child {
+    color: darken($color-danger, 20);
+    border: 2px solid $color-danger;
+    &:hover {
+      background-color: $color-danger;
+      color: $color-white;
+    }
+  }
+}
+
+.float {
+  position: absolute;
+  bottom: -1rem;
+  right: 1rem;
+}

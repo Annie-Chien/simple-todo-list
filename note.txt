@@ -1,0 +1,17 @@
+[src]
+  |__index.js
+  |__app.js
+  |__index.scss
+  |__[pages]
+  |     |__LoginPage.js
+  |     |__TodoAppPage.js
+  |__[components]
+        |__TodoItem.js
+        |__TodoList.js
+        |__TodoDetail.js
+        |__AddTodoForm.js
+        |__[UI]
+             |__Modal.js
+          
+
+

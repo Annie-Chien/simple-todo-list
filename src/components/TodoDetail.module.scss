@@ -1,0 +1,21 @@
+@import '../variables.scss';
+
+.content {
+  border: 2px solid $color-primary;
+  margin: 2rem;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+.priorityTag {
+  border-radius: 1rem;
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: $color-alert;
+
+  @include respond(phone) {
+    padding: 0.2rem 0.5rem;
+    font-size: 1.5rem;
+    margin-top: 1rem;
+  }
+}

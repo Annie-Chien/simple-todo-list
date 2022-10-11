@@ -1,0 +1,161 @@
+@import '../variables.scss';
+
+.background {
+  width: 100%;
+  height: 100vh;
+  background-color: $color-secondary;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  width: 100vh;
+  height: 70vh;
+  background-color: $color-white;
+  display: flex;
+  border-radius: 2rem;
+  overflow: hidden;
+  box-shadow: 3px 3px 1rem rgba(0, 0, 0, 0.25);
+
+  @include respond(phone) {
+    height: 100vh;
+    width: 100vw;
+    flex-direction: column;
+    border-radius: 0;
+  }
+
+  & > * {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+  }
+
+  &__left {
+    background-color: $color-primary;
+    flex: 0 1 40%;
+    overflow: hidden;
+
+    @include respond(phone) {
+      flex: 0 1 60%;
+    }
+  }
+
+  &__right {
+    flex: 0 1 60%;
+  }
+
+  &__title {
+    text-align: center;
+  }
+}
+
+.img__container {
+  width: 80%;
+  position: relative;
+
+  @include respond(phone) {
+    width: 48%;
+  }
+}
+
+.img {
+  width: 100%;
+  position: relative;
+  z-index: 10;
+}
+
+.bgImg {
+  position: absolute;
+  bottom: -2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: auto;
+}
+
+.login__greeting {
+  font-size: 5.5rem;
+  margin-bottom: 5rem;
+
+  @include respond(phone) {
+    font-size: 4rem;
+    margin-bottom: 0;
+  }
+}
+
+.login__btn {
+  width: 60%;
+  padding: 1rem;
+  border: none;
+  border-radius: 1rem;
+  background-color: rgba($color-primary, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  font-size: 1.8rem;
+  transition: all 0.25s;
+
+  &:last-child {
+    background: white;
+    border: 1px solid black;
+  }
+
+  &:hover {
+    background-color: $color-primary;
+  }
+}
+
+.option {
+  position: relative;
+
+  &::before,
+  &::after {
+    content: '';
+    width: 8rem;
+    height: 2px;
+    background-color: black;
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    margin: auto;
+  }
+
+  &::before {
+    transform: translateX(-120%);
+    left: -100%;
+  }
+
+  &::after {
+    right: -100%;
+    transform: translateX(120%);
+  }
+}
+
+.googleIcon {
+  max-width: 4rem;
+}
+.icon {
+  font-size: 3rem;
+}
+
+.footer {
+  background-color: darken($color-primary, 10);
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  color: white;
+  text-align: center;
+  padding: 1rem 0;
+
+  a {
+    text-decoration: none;
+    color: currentColor;
+  }
+
+  @include respond(phone) {
+    display: none;
+  }
+}

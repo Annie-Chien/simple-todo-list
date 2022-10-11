@@ -1,0 +1,36 @@
+// variables
+$color-primary: #bad7df;
+$color-primary-dark: #164876;
+$color-secondary: #f6f6f6;
+
+$color-danger: #d26c6c;
+$color-alert: #e7ca82;
+$color-success: #c4d26c;
+
+$color-white: #fff;
+
+//MEDIA QUERY MANAGERS
+@mixin respond($breakpoint) {
+  @if $breakpoint == 'laptop' {
+    @media (max-width: 64em) {
+      @content;
+    }
+  }
+  @if $breakpoint == 'tablet' {
+    @media (max-width: 48em) {
+      @content;
+    }
+  }
+  //phone: 37.5 * 16 = 600
+  @if $breakpoint == 'phone' {
+    @media (max-width: 37.5em) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == 'phone-sm' {
+    @media (max-width: 23.5em) {
+      @content;
+    }
+  }
+}

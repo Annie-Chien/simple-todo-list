@@ -1,0 +1,158 @@
+@import '../variables.scss';
+
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav {
+  flex: 0 1 10%;
+  width: 100%;
+  background-color: $color-primary;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__logo {
+    font-size: 4rem;
+    display: flex;
+    align-items: center;
+
+    @include respond(phone) {
+      font-size: 3rem;
+    }
+  }
+
+  .btn__logout {
+    font-size: 2rem;
+    border: none;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color 0.25s;
+
+    &:hover {
+      color: darken($color-danger, 20);
+    }
+  }
+}
+
+// MAIN
+.main {
+  display: flex;
+  color: $color-primary-dark;
+  height: 100%;
+
+  @include respond(phone) {
+    flex-direction: column;
+  }
+}
+
+.sidebar {
+  background-color: $color-secondary;
+  flex: 0 1 18%;
+  box-shadow: 1px 5px 5px rgba(0, 0, 0, 0.25);
+
+  @include respond(phone) {
+    flex: 0 1 10%;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
+  }
+
+  &__list {
+    height: 50%;
+    margin: 3rem 0;
+
+    @include respond(phone) {
+      margin: 1rem 0rem;
+      text-align: center;
+    }
+  }
+
+  &__listItem {
+    padding: 2rem 3rem;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.25s;
+    cursor: pointer;
+
+    @include respond(tablet) {
+      padding: 2rem 1rem;
+    }
+
+    @include respond(phone) {
+      padding: 1rem 1rem;
+      display: inline-flex;
+    }
+
+    &:not(:last-child) {
+      @include respond(phone) {
+        border-right: 1px solid rgb(109, 106, 106);
+      }
+      @include respond(phone-sm) {
+        border: none;
+      }
+    }
+
+    span {
+      margin-left: 1.5rem;
+      text-transform: capitalize;
+      @include respond(phone) {
+        margin: 0 1.5rem;
+      }
+    }
+
+    &:hover {
+      background-color: $color-primary;
+    }
+  }
+}
+
+.icon {
+  font-size: 3rem;
+}
+
+.btn {
+  position: fixed;
+  left: 3rem;
+  bottom: 5rem;
+
+  @include respond(phone) {
+    left: auto;
+    right: 2rem;
+    bottom: 2rem;
+  }
+}
+
+.section {
+  flex: 0 1 70%;
+  margin: 0 auto;
+  padding: 4rem;
+
+  @include respond(tablet) {
+    width: 75%;
+    padding: 4rem 0rem;
+  }
+
+  @include respond(phone) {
+    width: 95%;
+    padding: 4rem 0rem;
+  }
+
+  &__title {
+    border-bottom: 1px solid $color-primary-dark;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+  }
+
+  .btn__sort {
+    border: none;
+    background-color: transparent;
+    font-size: 2.5rem;
+  }
+}

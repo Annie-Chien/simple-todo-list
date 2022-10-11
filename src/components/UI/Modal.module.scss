@@ -1,0 +1,67 @@
+@import '../../variables.scss';
+
+.overlay {
+  position: absolute;
+  height: 100vh;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 50;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  position: relative;
+  z-index: 100;
+  width: 55vw;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  background-color: $color-secondary;
+
+  @include respond(tablet) {
+    width: 70vw;
+  }
+  @include respond(phone) {
+    width: 100%;
+  }
+}
+
+.card {
+  width: 100%;
+  position: relative;
+}
+
+.title {
+  width: 100%;
+  font-size: 2rem;
+  padding: 1.5rem 2rem;
+  background: $color-primary;
+  color: $color-primary-dark;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @include respond(phone-sm) {
+    padding: 1rem 2rem;
+  }
+}
+
+.closeBtn {
+  border: none;
+  background-color: transparent;
+}
+
+.xmark {
+  font-size: 3rem;
+
+  &:hover {
+    color: $color-danger;
+  }
+}

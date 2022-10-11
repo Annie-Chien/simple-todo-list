@@ -1,0 +1,97 @@
+@import './variables.scss';
+
+//basic setting
+*,
+*:before,
+*:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+}
+
+html {
+  font-size: 62.5%;
+  @include respond(laptop) {
+    font-size: 58%;
+  }
+}
+
+body {
+  font-size: 1.6rem;
+  font-family: 'DM Sans', sans-serif;
+  height: 100vh;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+// typography
+.heading-1 {
+  font-size: 4rem;
+}
+
+.heading-2 {
+  font-size: 2.5rem;
+  text-transform: capitalize;
+}
+
+.paragraph {
+  font-size: 2rem;
+  margin: 1rem 0;
+
+  @include respond(phone) {
+    margin: 0;
+    font-size: 1.6rem;
+  }
+}
+
+.italic {
+  font-style: italic;
+}
+
+.bold {
+  font-weight: bolder;
+}
+
+//shared styles
+.btn {
+  border-radius: 1rem;
+  padding: 0.8rem 1rem;
+
+  @include respond(laptop) {
+    padding: 0.5rem;
+  }
+}
+
+.btn-add {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
+  border: none;
+  background-color: $color-primary;
+  color: $color-white;
+  font-size: 2rem;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.25);
+  transition: all 0.25s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    background-color: darken($color-primary, 30);
+    transform: scale(1.2);
+  }
+
+  @include respond(phone-sm) {
+    width: 5rem;
+    height: 5rem;
+  }
+}
+
+.active {
+  background: $color-primary;
+  font-weight: bolder;
+}
