@@ -20,6 +20,7 @@ const TodoContextProvider = ({ children }) => {
   const [modalIsShown, setModalIsShown] = useState(false);
   const [modal, setModal] = useState(); //確認是 detail or form modal
   const { user } = useContext(AuthContext);
+  let gotData = false;
 
   //Database: 寫入新資料
   const writeTodoData = (newTodo) => {
@@ -42,6 +43,7 @@ const TodoContextProvider = ({ children }) => {
           setInitialTodoList([]);
           const data = snapshot.val();
           if (data !== null) {
+            gotData = true;
             Object.values(data).forEach((todo) => {
               setInitialTodoList((prev) => [...prev, todo]);
             });
@@ -159,7 +161,7 @@ const TodoContextProvider = ({ children }) => {
         isEditing,
         user,
         initialTodoList,
-
+        gotData,
         addTodo,
         closeModal,
         showModal,

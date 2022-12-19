@@ -41,8 +41,7 @@
   # 重新整理 sort 回到原本模樣
 
 
-
-  #計算當周日期期間
+  # 計算當周日期期間
   一週起始日為禮拜一、結束日為禮拜天
   分別算出禮拜一和禮拜天的日期，最後回傳各自的 timestamp
 
@@ -52,8 +51,6 @@
   4. 把日期轉換成  timeStamp
   5. return timeStamp
 
-  # 不同的 modal
-  新增、edit (form)
-  details (僅供檢視)
+
 
 

@@ -50,7 +50,7 @@ const AddTodoForm = () => {
   const todayDateWithSlash = new Date().toLocaleDateString();
   const todayDate = formateDate(todayDateWithSlash);
 
-  //heck if the title input is empty or not
+  //check if the title input is empty or not
   const checkTitleIsNotEmpty = () => {
     if (titleRef.current.value === '') {
       setAlertIsShown(true); //show alert
