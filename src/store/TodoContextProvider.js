@@ -1,59 +1,27 @@
-import { useState, createContext, useEffect } from 'react';
+import { useState, createContext, useEffect, useContext } from 'react';
 //Firebase
 import { update, ref, onValue, set, remove } from 'firebase/database';
-import {
-  signInWithPopup,
-  GoogleAuthProvider,
-  signInWithEmailAndPassword,
-} from 'firebase/auth';
-import { db, auth } from './firebase';
+import { db } from './firebase.config';
+//Context
+import { AuthContext } from './AuthContextProvider';
+//Utils
+import { getWeekDates, convertTimestamp } from '../utils/utils';
 
-////////////////////////////////////////////////////////////////////
+//===================================================//
 
 export const TodoContext = createContext();
 
-////////////////////////////////////////////////////////////////////
+//===================================================//
 
 const TodoContextProvider = ({ children }) => {
-  const [todoList, setTodoList] = useState([]); //呈現在畫面上的todolist
-  const [initialTodoList, setInitialTodoList] = useState([]); //完整todoList
+  const [initialTodoList, setInitialTodoList] = useState([]); //完整 todoList
   const [currentTodo, setCurrentTodo] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [modalIsShown, setModalIsShown] = useState(false);
   const [modal, setModal] = useState(); //確認是 detail or form modal
-  const [user, setUser] = useState({ uid: localStorage.getItem('uid') }); //Firebase-Auth: 登入時的 user info
+  const { user } = useContext(AuthContext);
 
-  const googleSignIn = () => {
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        const userData = {
-          uid: result.user.uid,
-          userName: result.user.displayName,
-        };
-        setUser(userData);
-        localStorage.setItem('uid', user.uid);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const visitorSignIn = () => {
-    const email = 'test123@test.com';
-    const password = 'test123';
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        setUser(user);
-        localStorage.setItem('uid', user.uid);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  //DB: write
+  //Database: 寫入新資料
   const writeTodoData = (newTodo) => {
     set(ref(db, `todos/${user.uid}/${newTodo.id}`), {
       title: newTodo.title,
@@ -65,18 +33,16 @@ const TodoContextProvider = ({ children }) => {
     });
   };
 
-  //DB: read
+  //Database: （登入時）讀取資料
   useEffect(() => {
     if (user.uid) {
       onValue(
         ref(db, `todos/${user.uid}`),
         (snapshot) => {
-          setTodoList([]);
           setInitialTodoList([]);
           const data = snapshot.val();
           if (data !== null) {
             Object.values(data).forEach((todo) => {
-              setTodoList((prev) => [...prev, todo]);
               setInitialTodoList((prev) => [...prev, todo]);
             });
           }
@@ -103,6 +69,7 @@ const TodoContextProvider = ({ children }) => {
     remove(ref(db, `todos/${user.uid}/${id}`));
   };
 
+  //更新
   const updateTodo = (editedTodo) => {
     const newTodoList = initialTodoList.map((todo) => {
       if (todo.id === editedTodo.id) {
@@ -127,6 +94,15 @@ const TodoContextProvider = ({ children }) => {
     const updates = {};
     updates[`todos/${user.uid}/${id}`] = editedTodo;
     update(ref(db), updates);
+  };
+
+  //排序
+  const sortTodoList = () => {
+    const sortedTodoList = [...initialTodoList].sort(
+      (todo, nextTodo) => todo.dueDate - nextTodo.dueDate
+    );
+    console.log('sorted!');
+    setInitialTodoList(sortedTodoList);
   };
 
   ////////////////////////////////////////
@@ -155,73 +131,28 @@ const TodoContextProvider = ({ children }) => {
     }
   };
 
-  //convertTimestamp(): convert timestamp to (yyyy-mm-d or dd)
-  const convertTimestamp = (timeStamp) => {
-    const date = new Date(timeStamp);
-    return date.toLocaleDateString();
-  };
-
-  //計算當周日期期間
-  const getWeekDates = () => {
-    let now = new Date();
-    let dayOfWeek = now.getDay(); // 0 - 6: Sun ~ Sat
-    let todayDate = now.getDate(); //日期
-
-    let start = new Date(now);
-    start.setDate(todayDate - dayOfWeek + 1);
-    start.setHours(0, 0, 0, 0);
-
-    let end = new Date(now);
-    end.setDate(todayDate + (7 - dayOfWeek));
-    end.setHours(0, 0, 0, 0);
-
-    return [start.valueOf(), end.valueOf()];
-  };
-
   const filterTodoList = (subpage) => {
-    let filteredList;
-
     switch (subpage) {
       case 'overview':
-        filteredList = initialTodoList;
-        break;
+        return initialTodoList;
       case 'today':
         const todayDate = new Date().toLocaleDateString();
-        filteredList = initialTodoList.filter(
+        return initialTodoList.filter(
           (todo) => convertTimestamp(todo.dueDate) === todayDate
         );
-        break;
       case 'week':
         const [start, end] = getWeekDates();
-        filteredList = initialTodoList.filter(
+        return initialTodoList.filter(
           (todo) => todo.dueDate >= start && todo.dueDate <= end
         );
-        break;
       default:
-        filteredList = initialTodoList;
+        return initialTodoList;
     }
-
-    setTodoList(filteredList);
   };
-
-  //排序
-  const sortTodoList = () => {
-    const sortedTodoList = [...initialTodoList].sort(
-      (todo, nextTodo) => todo.dueDate - nextTodo.dueDate
-    );
-    console.log('sorted!');
-    setInitialTodoList(sortedTodoList);
-  };
-
-  //更新畫面
-  useEffect(() => {
-    setTodoList(initialTodoList);
-  }, [initialTodoList]);
 
   return (
     <TodoContext.Provider
       value={{
-        todoList,
         modalIsShown,
         modal,
         currentTodo,
@@ -235,16 +166,12 @@ const TodoContextProvider = ({ children }) => {
         setModal,
         deleteTodo,
         setCurrentTodo,
-        convertTimestamp,
         priorityColor,
         setIsEditing,
         updateTodo,
         filterTodoList,
         toggleChecked,
         sortTodoList,
-        googleSignIn,
-        setUser,
-        visitorSignIn,
       }}
     >
       {children}

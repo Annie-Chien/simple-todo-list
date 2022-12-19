@@ -1,23 +1,22 @@
-import { useContext, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 //Styles
 import styles from './TodoList.module.scss';
-//React Components
-import { TodoContext } from '../store/TodoContextProvider';
+// Components
 import TodoItem from './TodoItem';
 
-////////////////////////////////////////////////////////////////////
+//==================================================//
 
-const TodoList = ({ subpage }) => {
-  const [noTodo, setNoTodo] = useState('false');
-  const { todoList } = useContext(TodoContext);
-
-  useEffect(() => {
-    if (todoList.length === 0) {
-      setNoTodo(true);
-    } else {
-      setNoTodo(false);
-    }
-  }, [todoList]);
+const TodoList = ({ subpage, todoList }) => {
+  // const [noTodo, setNoTodo] = useState(false);
+  // console.log(todoList);
+  // useEffect(() => {
+  //   console.log(todoList);
+  //   if (todoList.length === 0) {
+  //     setNoTodo(true);
+  //   } else {
+  //     setNoTodo(false);
+  //   }
+  // }, [todoList]);
 
   const renderMessage = (subPage) => {
     switch (subPage) {
@@ -27,12 +26,14 @@ const TodoList = ({ subpage }) => {
         return 'You have nothing to do today. Have a nice day 🥳';
       case 'week':
         return 'You have nothing to do this week. Enjoy 😎';
+      default:
+        return 'You do not have any task. Add some new Todos! 😀';
     }
   };
 
   return (
     <div className={styles.list}>
-      {noTodo && <p>{renderMessage(subpage)}</p>}
+      {todoList.length === 0 && <p>{renderMessage(subpage)}</p>}
       {todoList.map((todo) => (
         <TodoItem todo={todo} key={todo.id} />
       ))}

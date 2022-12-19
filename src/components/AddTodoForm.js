@@ -5,6 +5,8 @@ import styles from './AddTodoForm.module.scss';
 //React Compenents
 import { TodoContext } from '../store/TodoContextProvider';
 import Modal from './UI/Modal';
+//Utils
+import { convertTimestamp } from '../utils/utils';
 
 ////////////////////////////////////////////////////////////////////
 
@@ -22,7 +24,6 @@ const AddTodoForm = () => {
     currentTodo,
     isEditing,
     setIsEditing,
-    convertTimestamp,
     priorityColor,
     updateTodo,
   } = useContext(TodoContext);
@@ -45,11 +46,11 @@ const AddTodoForm = () => {
       .join('-');
   };
 
-  //表單時間：限制只能選擇今天之後的日期、defaultValue 一併設定為今日日期（放在哪裡比較好?
+  //表單時間：限制只能選擇今天之後的日期、defaultValue 一併設定為今日日期
   const todayDateWithSlash = new Date().toLocaleDateString();
   const todayDate = formateDate(todayDateWithSlash);
 
-  //checkTitleIsNotEmpty: check if the title input is empty or not
+  //heck if the title input is empty or not
   const checkTitleIsNotEmpty = () => {
     if (titleRef.current.value === '') {
       setAlertIsShown(true); //show alert
@@ -60,10 +61,9 @@ const AddTodoForm = () => {
     }
   };
 
-  //handleEditTodo: 新增 Todo
+  //新增 Todo
   const handleAddTodo = () => {
     if (!checkTitleIsNotEmpty()) return; //if title is empty, then show alert and do nothing
-
     const uniqueId = new Date().getTime(); //generate a unique ID
     const newTodo = {
       id: uniqueId,
@@ -81,7 +81,6 @@ const AddTodoForm = () => {
   //handleEditTodo: 編輯Todo
   const handleEditTodo = () => {
     if (!checkTitleIsNotEmpty()) return; //if title is empty, then show alert and do nothing
-
     const editedTodo = {
       id: currentTodo.id,
       title: titleRef.current.value,
@@ -90,7 +89,6 @@ const AddTodoForm = () => {
       checked: currentTodo.checked,
       priority,
     };
-
     updateTodo(editedTodo);
     closeModal();
   };

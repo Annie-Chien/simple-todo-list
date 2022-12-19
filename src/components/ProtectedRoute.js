@@ -1,15 +1,27 @@
-import { Navigate } from 'react-router-dom';
 import { useContext } from 'react';
+//React Router
+import { Navigate } from 'react-router-dom';
+import LoadingPage from '../pages/LoadingPage';
+//Context
+import { AuthContext } from '../store/AuthContextProvider';
 
-import { TodoContext } from '../store/TodoContextProvider';
+//===================================================//
 
 export const ProtectedRoute = ({ children }) => {
-  const { user } = useContext(TodoContext);
-  if (!user.uid) {
-    // user is not authenticated
-    return <Navigate to="/" />;
+  const { user, isLoading } = useContext(AuthContext);
+
+  if (isLoading) {
+    console.log(isLoading);
+    return <LoadingPage />;
   }
-  return children;
+
+  if (user && user.uid) {
+    console.log(user);
+    return children;
+  }
+
+  console.log(isLoading, user);
+  return <Navigate to="/" />;
 };
 
 export default ProtectedRoute;

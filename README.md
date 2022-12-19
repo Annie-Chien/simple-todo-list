@@ -2,7 +2,7 @@
 
 實作有登入功能的 Todo List，並使用 Firebase 的 Realtime Database 來儲存資料。
 
-🚪 [Live](https://simeple-todo-list.netlify.app)
+🚪 [Live Demo](https://simeple-todo-list.netlify.app)
 
 ## Overview
 
@@ -32,6 +32,13 @@
 - React, React Router
 - CSS Modules, SASS
 - Firebase
+
+## 未來可新增之功能
+
+- 搜尋功能
+- 側邊選單 Week 的 UI 介面優化：分成 MON、TUE...SAT
+- Drag and Drop：使用者可以拖曳來更改 Todo 的順序
+- 新增檢視的方式：月曆
 
 ## Resources
 

@@ -1,4 +1,5 @@
 import { useState, useContext, useEffect } from 'react';
+//React Router
 import { useNavigate } from 'react-router-dom';
 // Icon & Styles
 import {
@@ -10,19 +11,19 @@ import {
 import { BsPlusLg, BsSortDownAlt } from 'react-icons/bs';
 import { IoExitOutline } from 'react-icons/io5';
 import styles from './TodoAppPage.module.scss';
-//React Components
+//Components
 import TodoList from '../components/TodoList';
 import AddTodoForm from '../components/AddTodoForm';
 import TodoDetail from '../components/TodoDetail';
+//Context
+import { AuthContext } from '../store/AuthContextProvider';
 import { TodoContext } from '../store/TodoContextProvider';
-//Firebase
-import { auth } from '../store/firebase';
-import { onAuthStateChanged, signOut } from 'firebase/auth';
 
-////////////////////////////////////////////////////////////////////
+//===================================================//
 
 const TodoAppPage = () => {
   const navigate = useNavigate();
+  const { userSignOut } = useContext(AuthContext);
   const [subpage, setSubpage] = useState('overview');
   const {
     modalIsShown,
@@ -32,50 +33,25 @@ const TodoAppPage = () => {
     setIsEditing,
     filterTodoList,
     sortTodoList,
-    setUser,
-    initialTodoList,
   } = useContext(TodoContext);
+  const todoList = filterTodoList(subpage);
 
-  //[UI] subPageClasses: 為目前 subpage 增加 active 樣式
-  const subPageClasses = (subpageTitle) => {
-    if (subpageTitle === subpage) {
-      return `${styles.sidebar__listItem} active`;
-    } else {
-      return `${styles.sidebar__listItem}`;
-    }
-  };
-
-  // DB : Sign out
+  //使用者登出
   const handleSignOut = () => {
-    signOut(auth)
+    userSignOut()
       .then(() => {
         navigate('/');
         console.log('successfully log out!');
-        setUser({});
-        localStorage.removeItem('uid');
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => console.log(error));
   };
 
-  // DB: login, read data
-  useEffect(() => {
-    const removeListener = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const userData = {
-          uid: user.uid,
-          authName: user.displayName,
-        };
-        setUser(userData);
-      }
-    });
-    return () => removeListener();
-  }, []);
-
-  useEffect(() => {
-    filterTodoList(subpage);
-  }, [initialTodoList]);
+  //[style] subPageClasses: 為目前 subpage 增加 active class
+  const subPageClasses = (subpageTitle) => {
+    return subpageTitle === subpage
+      ? `${styles.sidebar__listItem} active`
+      : `${styles.sidebar__listItem}`;
+  };
 
   return (
     <div className={styles.container}>
@@ -145,7 +121,7 @@ const TodoAppPage = () => {
               <BsSortDownAlt />
             </button>
           </div>
-          <TodoList subpage={subpage} />
+          <TodoList subpage={subpage} todoList={todoList} />
         </section>
       </main>
     </div>

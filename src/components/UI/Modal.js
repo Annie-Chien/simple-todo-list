@@ -2,16 +2,17 @@ import { useContext } from 'react';
 //Icon & Styles
 import { FiX } from 'react-icons/fi';
 import styles from './Modal.module.scss';
-//React Components
+// Components
 import { TodoContext } from '../../store/TodoContextProvider';
 
-////////////////////////////////////////////////////////////////////
+//===================================================//
 
 const Modal = ({ children }) => {
   const { closeModal, modal, isEditing } = useContext(TodoContext);
 
   const closeOverlay = (e) => {
-    if (e.currentTarget === e.target || e.target.matches(`.${styles.xmark}`)) {
+    //當 event target 是 overlay 或是 xMark 才執行
+    if (e.target === e.currentTarget || e.target.matches(`.${styles.xmark}`)) {
       closeModal();
     }
   };

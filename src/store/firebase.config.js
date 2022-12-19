@@ -14,6 +14,7 @@ const firebaseConfig = {
     'https://todo-list-9b7fb-default-rtdb.asia-southeast1.firebasedatabase.app',
 };
 
+//Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
 export const db = getDatabase(app);

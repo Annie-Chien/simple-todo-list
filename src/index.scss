@@ -1,6 +1,6 @@
 @import './variables.scss';
 
-//basic setting
+//CSS RESET
 *,
 *:before,
 *:after {
@@ -28,7 +28,7 @@ button {
   font-family: inherit;
 }
 
-// typography
+// TYPOGRAPHY
 .heading-1 {
   font-size: 4rem;
 }
@@ -56,7 +56,7 @@ button {
   font-weight: bolder;
 }
 
-//shared styles
+//SHARED STYLES
 .btn {
   border-radius: 1rem;
   padding: 0.8rem 1rem;

@@ -4,12 +4,12 @@ import styles from './TodoDetail.module.scss';
 //React Components
 import Modal from './UI/Modal';
 import { TodoContext } from '../store/TodoContextProvider';
-
+//Utils
+import { convertTimestamp } from '../utils/utils';
 ////////////////////////////////////////////////////////////////////
 
 const TodoDetail = () => {
-  const { currentTodo, convertTimestamp, priorityColor } =
-    useContext(TodoContext);
+  const { currentTodo, priorityColor } = useContext(TodoContext);
 
   return (
     <Modal>

@@ -4,7 +4,8 @@ import { FiEdit3, FiTrash2 } from 'react-icons/fi';
 import styles from './TodoItem.module.scss';
 //React Componenets
 import { TodoContext } from '../store/TodoContextProvider';
-
+//utils
+import { convertTimestamp } from '../utils/utils';
 ////////////////////////////////////////////////////////////////////
 
 const TodoItem = ({ todo }) => {
@@ -15,7 +16,6 @@ const TodoItem = ({ todo }) => {
     showModal,
     deleteTodo,
     setCurrentTodo,
-    convertTimestamp,
     priorityColor,
     setIsEditing,
     toggleChecked,

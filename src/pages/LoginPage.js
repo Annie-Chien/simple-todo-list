@@ -7,21 +7,37 @@ import googleIcon from '../img/google-icon.png';
 import { FaUserCircle } from 'react-icons/fa';
 import styles from './LoginPage.module.scss';
 // React Components
-import { TodoContext } from '../store/TodoContextProvider';
+import { AuthContext } from '../store/AuthContextProvider';
 
+//===================================================//
 const LoginPage = () => {
+  const { user, googleSignIn, visitorSignIn } = useContext(AuthContext);
   const navigate = useNavigate();
-  const { user, googleSignIn, visitorSignIn } = useContext(TodoContext);
 
-  useEffect(() => {
-    console.log(user);
-    if (user.uid) {
-      navigate('/todos');
-    }
-  }, [user]);
+  //登入方式：Google
+  const handleGoogleSignIn = () => {
+    googleSignIn()
+      .then((result) => {
+        console.log(result.user);
+        navigate('/todos');
+      })
+      .catch((error) => console.log(error));
+  };
+
+  //登入方式：Demo Version
+  const handleVisitorSignIn = () => {
+    visitorSignIn()
+      .then((result) => {
+        console.log(result.user);
+        navigate('/todos');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
-    <div className={styles.background}>
+    <div className={styles.background} onClick={() => console.log(user)}>
       <div className={styles.card}>
         <section className={styles.card__left}>
           <div className={styles.card__title}>
@@ -39,7 +55,7 @@ const LoginPage = () => {
         </section>
         <section className={styles.card__right}>
           <p className={styles.login__greeting}>Welcome!</p>
-          <button className={styles.login__btn} onClick={googleSignIn}>
+          <button className={styles.login__btn} onClick={handleGoogleSignIn}>
             <img
               src={googleIcon}
               alt="google icon"
@@ -48,7 +64,7 @@ const LoginPage = () => {
             Sign in with Google
           </button>
           <div className={styles.option}>or</div>
-          <button className={styles.login__btn} onClick={visitorSignIn}>
+          <button className={styles.login__btn} onClick={handleVisitorSignIn}>
             <FaUserCircle className={styles.icon} /> Demo Version
           </button>
         </section>

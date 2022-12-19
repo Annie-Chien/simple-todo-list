@@ -1,17 +1,59 @@
+## 檔案架構
 [src]
   |__index.js
-  |__app.js
-  |__index.scss
+  |__App.js
+  |__index.scss：global styles
+  |__[img]：存放圖片
+  |
+  |＿[utils]
+  |     |__utils.js：小工具函式
+  |
+  |__[store]
+  |     |__firsebase.congif.js：firebase 的初始化設定
+  |     |__AuthContextProvider.js：使用者狀態（登入登出）
+  |     |__TodoContextProvider.js：Todo 資料 / UI 控制
+  |
   |__[pages]
-  |     |__LoginPage.js
-  |     |__TodoAppPage.js
+  |     |__LoginPage.js：(the landing page)
+  |     |__LoginPage.module.scss
+  |     |__TodoAppPage.js：(protected page, only logged-in user have access)
+  |     |__TodoAppPage.module.scss
+  |     |__NotFoundPage.js
+  |     |__NotFoundPage.module.scss
+  |     |__LoadingPage.js
+  |     |__LoadingPage.module.scss
+  |
   |__[components]
         |__TodoItem.js
+        |__TodoItem.module.scss
         |__TodoList.js
+        |__TodoList.module.scss
         |__TodoDetail.js
+        |__TodoDetail.module.scss
         |__AddTodoForm.js
+        |__AddTodoForm.module.scss
+        |__ProtectedRoute.js：當使用者為登入狀態，則 render TodoAppPage；反之，則將使用者導回 LoginPage 
         |__[UI]
              |__Modal.js
+             |__Modal.module.scss
           
+  # route 改變會有問題！
+  # 重新整理 sort 回到原本模樣
+
+
+
+  #計算當周日期期間
+  一週起始日為禮拜一、結束日為禮拜天
+  分別算出禮拜一和禮拜天的日期，最後回傳各自的 timestamp
+
+  1. 取得今日日期和禮拜幾
+  2. 禮拜一的日期 = 今日日期 - 今天禮拜幾 + 1
+  3. 禮拜天的日期 = 今日日期 + (7 - 今天禮拜幾)
+  4. 把日期轉換成  timeStamp
+  5. return timeStamp
+
+  # 不同的 modal
+  新增、edit (form)
+  details (僅供檢視)
 
 
