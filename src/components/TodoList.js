@@ -22,10 +22,11 @@ const TodoList = ({ subpage, todoList }) => {
         return 'You do not have any task. Add some new Todos! 😀';
     }
   };
-
   return (
     <div className={styles.list}>
-      {gotData && todoList.length === 0 && <p>{renderMessage(subpage)}</p>}
+      {gotData.current && todoList.length === 0 && (
+        <p>{renderMessage(subpage)}</p>
+      )}
       {todoList.map((todo) => (
         <TodoItem todo={todo} key={todo.id} />
       ))}

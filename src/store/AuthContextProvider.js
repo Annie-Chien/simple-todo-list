@@ -38,16 +38,15 @@ const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     const removeListener = onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log(user);
         const userData = {
           uid: user.uid,
           authName: user.displayName,
         };
         setUser(userData);
-        setIsLoading(false);
       } else {
         setUser({});
       }
+      setIsLoading(false);
 
       console.log('auth state changed!', user);
     });

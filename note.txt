@@ -37,7 +37,7 @@
              |__Modal.js
              |__Modal.module.scss
           
-  # route 改變會有問題！
+
   # 重新整理 sort 回到原本模樣
 
 

@@ -1,5 +1,5 @@
-import { useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
 // Image & Icon & Styles
 import loginImg from '../img/loginPage_img.svg';
 import loginBgImg from '../img/loginPage_imgBg.png';
@@ -8,17 +8,18 @@ import { FaUserCircle } from 'react-icons/fa';
 import styles from './LoginPage.module.scss';
 // React Components
 import { AuthContext } from '../store/AuthContextProvider';
+import LoadingPage from './LoadingPage';
 
 //===================================================//
 const LoginPage = () => {
-  const { user, googleSignIn, visitorSignIn } = useContext(AuthContext);
+  const { user, googleSignIn, visitorSignIn, isLoading } =
+    useContext(AuthContext);
   const navigate = useNavigate();
 
   //登入方式：Google
   const handleGoogleSignIn = () => {
     googleSignIn()
       .then((result) => {
-        console.log(result.user);
         navigate('/todos');
       })
       .catch((error) => console.log(error));
@@ -28,7 +29,6 @@ const LoginPage = () => {
   const handleVisitorSignIn = () => {
     visitorSignIn()
       .then((result) => {
-        console.log(result.user);
         navigate('/todos');
       })
       .catch((error) => {
@@ -36,8 +36,16 @@ const LoginPage = () => {
       });
   };
 
+  if (user.uid) {
+    return <Navigate to="/todos" />;
+  }
+
+  if (isLoading) {
+    return <LoadingPage />;
+  }
+
   return (
-    <div className={styles.background} onClick={() => console.log(user)}>
+    <div className={styles.background}>
       <div className={styles.card}>
         <section className={styles.card__left}>
           <div className={styles.card__title}>

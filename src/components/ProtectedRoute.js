@@ -10,18 +10,14 @@ import { AuthContext } from '../store/AuthContextProvider';
 export const ProtectedRoute = ({ children }) => {
   const { user, isLoading } = useContext(AuthContext);
 
-  if (isLoading && !user) {
-    console.log(isLoading);
+  if (isLoading) {
     return <LoadingPage />;
   }
 
-  if (user && user.uid) {
-    console.log(user);
-    return children;
+  if (!user.uid) {
+    return <Navigate to="/" />;
   }
-
-  console.log(isLoading, user);
-  return <Navigate to="/" />;
+  return children;
 };
 
 export default ProtectedRoute;

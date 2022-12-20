@@ -1,4 +1,4 @@
-import { useState, createContext, useEffect, useContext } from 'react';
+import { useState, createContext, useEffect, useContext, useRef } from 'react';
 //Firebase
 import { update, ref, onValue, set, remove } from 'firebase/database';
 import { db } from './firebase.config';
@@ -20,7 +20,7 @@ const TodoContextProvider = ({ children }) => {
   const [modalIsShown, setModalIsShown] = useState(false);
   const [modal, setModal] = useState(); //確認是 detail or form modal
   const { user } = useContext(AuthContext);
-  let gotData = false;
+  const gotData = useRef(false);
 
   //Database: 寫入新資料
   const writeTodoData = (newTodo) => {
@@ -43,10 +43,10 @@ const TodoContextProvider = ({ children }) => {
           setInitialTodoList([]);
           const data = snapshot.val();
           if (data !== null) {
-            gotData = true;
             Object.values(data).forEach((todo) => {
               setInitialTodoList((prev) => [...prev, todo]);
             });
+            gotData.current = true;
           }
         },
         { onlyOnce: true }
