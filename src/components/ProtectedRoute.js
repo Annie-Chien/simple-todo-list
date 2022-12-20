@@ -10,7 +10,7 @@ import { AuthContext } from '../store/AuthContextProvider';
 export const ProtectedRoute = ({ children }) => {
   const { user, isLoading } = useContext(AuthContext);
 
-  if (isLoading) {
+  if (isLoading && !user) {
     console.log(isLoading);
     return <LoadingPage />;
   }
